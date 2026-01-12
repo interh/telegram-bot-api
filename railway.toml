@@ -3,20 +3,15 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "telegram-bot-api --api-id=$TELEGRAM_API_ID --api-hash=$TELEGRAM_API_HASH --http-port=8081 --local --verbosity=3"
+# telegram-bot-api 会自动从环境变量读取 TELEGRAM_API_ID 和 TELEGRAM_API_HASH
+startCommand = "telegram-bot-api --http-port=8081 --local --verbosity=3"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
-# 注意：Telegram Bot API 没有标准的health check endpoint
-# Railway会通过端口监听来判断服务是否就绪
-# healthcheckPath = "/"
-# healthcheckTimeout = 300
-
 [service]
-# 暴露的端口
 internalPort = 8081
 
-# 环境变量配置（这些需要在Railway控制台中设置）
+# 环境变量配置（在Railway控制台设置）
 [[env]]
 name = "TELEGRAM_API_ID"
 description = "Your Telegram API ID from https://my.telegram.org"
@@ -44,8 +39,3 @@ default = "3"
 name = "TELEGRAM_HTTP_IDLE_TIMEOUT"
 description = "HTTP idle timeout in seconds"
 default = "500"
-
-# 持久化存储配置
-[volumes]
-# Bot数据目录
-"/var/lib/telegram-bot-api" = { size = "1GB" }
