@@ -7,9 +7,10 @@ startCommand = "telegram-bot-api --api-id=$TELEGRAM_API_ID --api-hash=$TELEGRAM_
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
-# 健康检查配置
-healthcheckPath = "/"
-healthcheckTimeout = 100
+# 注意：Telegram Bot API 没有标准的health check endpoint
+# Railway会通过端口监听来判断服务是否就绪
+# healthcheckPath = "/"
+# healthcheckTimeout = 300
 
 [service]
 # 暴露的端口
