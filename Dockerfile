@@ -41,9 +41,8 @@ WORKDIR /var/lib/telegram-bot-api
 # 暴露端口
 EXPOSE 8081 8082
 
-# 健康检查
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8081/ || exit 1
+# Railway通过端口监听判断服务就绪，不需要健康检查
+# Telegram Bot API 启动后会立即监听端口
 
 # 默认命令（会被railway.toml的startCommand覆盖）
 CMD ["telegram-bot-api", "--help"]
