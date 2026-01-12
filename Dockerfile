@@ -41,8 +41,5 @@ WORKDIR /var/lib/telegram-bot-api
 # 暴露端口
 EXPOSE 8081 8082
 
-# Railway通过端口监听判断服务就绪，不需要健康检查
-# Telegram Bot API 启动后会立即监听端口
-
-# 默认命令（会被railway.toml的startCommand覆盖）
-CMD ["telegram-bot-api", "--help"]
+# telegram-bot-api会自动从环境变量读取凭证
+CMD ["telegram-bot-api", "--http-port=8081", "--local", "--verbosity=3"]
